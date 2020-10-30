@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VoteX</title>
+
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <!-- Google Font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+
+    <!-- Jquery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+</head>
+
+<body>
+    <!-- Top Nav -->
+    <nav>
+        <h1>VoteX</h1>
+        <p>Upload</p>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <div class="container" id="container">
+
+            <!-- Question Title -->
+            <p class="fade-in" id="question_name"></p>
+
+            <!-- Left Img & Right Img -->
+            <div class="img-container fade-in">
+                <img class="img-left">
+                <img class="img-right">
+            </div>
+
+            <!-- List Pagination -->
+            <div class="container-footer">
+                <span id="sp0" class="filled">1</span>
+                <hr id="hr0" class="filled">
+                <span id="sp1">2</span>
+                <hr id="hr1">
+                <span id="sp2">3</span>
+                <hr id="hr2">
+                <span id="sp3">4</span>
+                <hr id="hr3">
+                <span id="sp4">5</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>Copyright &copy; 2020</p>
+    </footer>
+
+    <!-- Store Data || Default 1-->
+    <input type="hidden" id="data2" value="1">
+
+    <!-- Jquery -->
+    <script>
+        $(document).ready(function () {
+
+            /**
+             * FETCH DATA FROM SERVER AS JSON FORMAT
+             */
+            var json_data = [
+                {
+                    question: 'Who looks Cool?',
+                    img1: 'assets/img/01.png',
+                    img2: 'assets/img/02.png'
+                },
+                {
+                    question: 'Who looks alone?',
+                    img1: 'assets/img/15.jpg',
+                    img2: 'assets/img/13.jpg'
+                },
+                {
+                    question: 'Who looks stylelist?',
+                    img1: 'assets/img/05.jpg',
+                    img2: 'assets/img/10.jpg'
+                },
+                {
+                    question: 'Who looks Sad?',
+                    img1: 'assets/img/11.jpg',
+                    img2: 'assets/img/12.jpg'
+                },
+                {
+                    question: 'Ended'
+                }
+            ];
+
+            // SET DEFAULT DATA
+            $("#question_name").text(json_data[0].question);
+            $(".img-left").attr('src', json_data[0].img1);
+            $(".img-right").attr('src', json_data[0].img2);
+
+            // CHANGE DATA PER CLICK ON IMG
+            $(".img-container img").click(function () {
+
+                // GET STORE DATA FROM HTML
+                var tab_no = parseInt($("#data2").val());
+
+                // CHANGE EACH DATA
+                $("#question_name").text(json_data[tab_no].question);
+                $(".img-left").attr('src', json_data[tab_no].img1);
+                $(".img-right").attr('src', json_data[tab_no].img2);
+
+                // FILL ACTIVE LIST
+                $("#sp" + tab_no).addClass('filled');
+                $("#hr" + tab_no).addClass('filled');
+                $("#data2").val(parseInt(tab_no) + 1);
+
+                // CHECK THE LAST TAB
+                if (parseInt($("#data2").val()) == 5) {
+                    $("#container").html(
+                        '<p>Ended. Go back</p><a class="btn-a" href="/VoteX">Start Again</a>'
+                    );
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
